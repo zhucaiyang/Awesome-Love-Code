@@ -5,269 +5,525 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>朱采阳&#10084;&#65039;</title>
-    <script src="https://cdn.jsdelivr.net/gh/zyoushuo/Blog/hexo/js/mouse_slide.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/zyoushuo/Blog/hexo/js/clicklove.js"></script>
-  <style type="text/css">
-    html, body {
-      height: 100%;
-      padding: 0;
-      margin: 0;
-      background: #000;
+      <title>镇江立凯电力设备有限公司</title>
+  <!-- 引入Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- 引入Font Awesome -->
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  
+  <!-- 配置Tailwind -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#2c3e50',
+            secondary: '#3498db',
+            accent: '#e74c3c',
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+        },
+      }
     }
-    canvas {
-      position: absolute;
-      width: 100%;
-      height: 100%;
+  </script>
+  
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .content-auto {
+        content-visibility: auto;
+      }
+      .section-title {
+        @apply relative h-20 md:h-24 flex items-center justify-center text-white font-bold text-xl md:text-2xl lg:text-3xl shadow-md;
+      }
+      .nav-button {
+        @apply px-4 py-2 rounded-md bg-white/90 text-primary font-medium shadow-md hover:bg-white transition-all duration-300 transform hover:-translate-y-1;
+      }
+      .card-hover {
+        @apply transition-all duration-300 hover:shadow-xl hover:-translate-y-1;
+      }
     }
-    .namebox{
-      color: #fff;
-      position: absolute;   
-            top: 50%;   
-            left: 50%;   
-            -webkit-transform: translate(-50%, -50%);   
-            -moz-transform: translate(-50%, -50%);   
-            -ms-transform: translate(-50%, -50%);   
-            -o-transform: translate(-50%, -50%);   
-            transform: translate(-50%, -50%);   
-    }
-    .namebox h1{
-      margin: 0 auto;
-    }
+  </style>
   </style>
 
 </head>
 <body>
-<canvas id="pinkboard"></canvas>
-<script>
-  var settings = {
-    particles: {
-      length: 500, // maximum amount of particles
-      duration: 2, // particle duration in sec
-      velocity: 100, // particle velocity in pixels/sec
-      effect: -0.75, // play with this for a nice effect
-      size: 30, // particle size in pixels
-    },
-  };
-  (
-          function(){
-            var b=0;
-            var c=["ms","moz","webkit","o"];
-            for(var a=0;a<c.length&&!window.requestAnimationFrame;++a){
-              window.requestAnimationFrame=window[c[a]+"RequestAnimationFrame"];
-              window.cancelAnimationFrame=window[c[a]+"CancelAnimationFrame"]||window[c[a]+"CancelRequestAnimationFrame"]
-            }
-            if(!window.requestAnimationFrame){
-              window.requestAnimationFrame=function(h,e){
-                var d=new Date().getTime();
-                var f=Math.max(0,16-(d-b));
-                var g=window.setTimeout(function(){h(d+f)},f);b=d+f;return g}}if(!window.cancelAnimationFrame){window.cancelAnimationFrame=function(d){clearTimeout(d)}}}());
-  var Point = (function() {
-    function Point(x, y) {
-      this.x = (typeof x !== 'undefined') ? x : 0;
-      this.y = (typeof y !== 'undefined') ? y : 0;
+<body class="font-sans text-gray-800 overflow-x-hidden">
+  <!-- 导航按钮 (固定在首页图上方) -->
+  <nav id="main-nav" class="fixed top-4 left-0 right-0 z-50 flex justify-center gap-2 md:gap-4 px-4">
+    <button class="nav-button" onclick="scrollToSection('home')">
+      <i class="fa fa-home mr-1"></i> 首页
+    </button>
+    <button class="nav-button" onclick="scrollToSection('about')">
+      <i class="fa fa-building mr-1"></i> 企业简介
+    </button>
+    <button class="nav-button" onclick="scrollToSection('achievements')">
+      <i class="fa fa-trophy mr-1"></i> 资质业绩
+    </button>
+    <button class="nav-button" onclick="scrollToSection('principle')">
+      <i class="fa fa-cogs mr-1"></i> 工程原理
+    </button>
+    <button class="nav-button" onclick="scrollToSection('products')">
+      <i class="fa fa-cube mr-1"></i> 产品展示
+    </button>
+    <button class="nav-button" onclick="scrollToSection('contact')">
+      <i class="fa fa-envelope mr-1"></i> 联系方式
+    </button>
+  </nav>
+
+  <!-- 首页图片区域 -->
+  <section id="home" class="relative h-screen flex items-center justify-center">
+    <img src="..\pictures\首页.png" alt="首页图片" class="w-full h-full object-cover">
+    <div class="absolute inset-0 bg-black/30"></div>
+    <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 text-white animate-bounce">
+      <button onclick="scrollToSection('about')" class="text-4xl">
+        <i class="fa fa-angle-down"></i>
+      </button>
+    </div>
+  </section>
+
+  <!-- 企业简介 -->
+  <section id="about" class="py-12 bg-gray-50">
+    <!-- 标题栏 -->
+    <div class="section-title mb-10" style="background-image: url('https://picsum.photos/id/1015/1200/200'); background-size: cover; background-position: center;">
+      企业简介
+    </div>
+    
+    <div class="container mx-auto px-4">
+      <div class="flex flex-col md:flex-row gap-8 items-center">
+        <div class="w-full">
+          <h2 class="text-2xl md:text-3xl font-bold mb-4 text-primary">关于我们</h2>
+          <p class="text-gray-700 mb-4 leading-relaxed">
+            镇江立凯电力设备有限公司位于美丽富饶的水上花园城市--江苏省扬中市。
+          </p >
+          <p class="text-gray-700 mb-4 leading-relaxed">
+            我公司专业致力于电力环保产业，吸收英国、芬兰最先进的粉体气力输送技术和脱硫技术，拥有多项专利技术,工程业绩众多,科技创新,追求卓越。镇江立凯利用用户的大力支持和丰富的工程经验，致力于我国电力行业蓝天碧水的环保事业。
+          </p >
+          <p class="text-gray-700 mb-4 leading-relaxed">
+            诚信铸就品牌,质量编织未来,优秀的团队，先进的设备,高效的管理是立凯环保品质的保证,让用户满意是立凯全体员工永恒的追求!
+          </p >
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 资质业绩 -->
+  <section id="achievements" class="py-12 bg-white">
+    <!-- 标题栏 -->
+    <div class="section-title mb-10" style="background-image: url('https://picsum.photos/id/1019/1200/200'); background-size: cover; background-position: center;">
+      资质业绩
+    </div>
+    
+    <div class="container mx-auto px-4">
+      <h2 class="text-2xl md:text-3xl font-bold mb-8 text-center text-primary">企业资质与荣誉</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+        <div class="bg-gray-50 p-6 rounded-lg shadow-md card-hover">
+          <div class="h-48 overflow-hidden rounded mb-4">
+            <img src="../pictures/质量管理体系认证证书.png" alt="质量管理体系认证证书" class="w-full h-full object-cover">
+          </div>
+          <h3 class="text-xl font-semibold mb-2">质量管理体系认证证书</h3>
+          <p class="text-gray-600">公司通过新标元（上海）有限公司质量管理体系认证，确保产品质量稳定可靠。</p >
+        </div>
+        
+        <div class="bg-gray-50 p-6 rounded-lg shadow-md card-hover">
+          <div class="h-48 overflow-hidden rounded mb-4">
+            <img src="../pictures/营业执照.png" alt="营业执照" class="w-full h-full object-cover">
+          </div>
+          <h3 class="text-xl font-semibold mb-2">营业执照</h3>
+          <p class="text-gray-600">拥有国家营业执照，项目有保障产品有信心。</p >
+        </div>
+        
+        <div class="bg-gray-50 p-6 rounded-lg shadow-md card-hover">
+          <div class="h-48 overflow-hidden rounded mb-4">
+            <img src="../pictures/业绩表.png" alt="业绩表" class="w-full h-full object-cover">
+          </div>
+          <h3 class="text-xl font-semibold mb-2">业绩拔尖</h3>
+          <p class="text-gray-600">凭借优秀产品资质达成多项项目合作，期待您的光临。</p >
+        </div>
+      </div>
+      
+      <h2 class="text-2xl md:text-3xl font-bold mb-8 text-center text-primary">代表性业绩</h2>
+      
+      <div class="overflow-x-auto">
+        <table class="w-full border-collapse">
+          <thead>
+            <tr class="bg-primary text-white">
+              <th class="p-3 text-left border border-gray-300">产品</th>
+              <th class="p-3 text-left border border-gray-300">机组</th>
+              <th class="p-3 text-left border border-gray-300">时间</th>
+              <th class="p-3 text-left border border-gray-300">用户厂家</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="hover:bg-gray-50">
+              <td class="p-3 border border-gray-300">圆顶阀，气动平衡阀，补气环，陶瓷弯头，布袋，脉冲电磁阀等</td>
+              <td class="p-3 border border-gray-300">3*5MW</td>
+              <td class="p-3 border border-gray-300">2024年</td>
+              <td class="p-3 border border-gray-300">黑龙江华电桦川热电厂</td>
+            </tr>
+            <tr class="hover:bg-gray-50">
+              <td class="p-3 border border-gray-300">脱硫灰空气斜槽，气力输灰系统，给料机，石灰石粉输送系统，挡板门，膨胀节，灰库设备</td>
+              <td class="p-3 border border-gray-300"></td>
+              <td class="p-3 border border-gray-300">2024年</td>
+              <td class="p-3 border border-gray-300">河北邢台旭阳焦化</td>
+            </tr>
+            <tr class="hover:bg-gray-50">
+              <td class="p-3 border border-gray-300">气力输灰系统</td>
+              <td class="p-3 border border-gray-300"></td>
+              <td class="p-3 border border-gray-300">2024年</td>
+              <td class="p-3 border border-gray-300">河北黄骅中铁集团</td>
+            </tr>
+            <tr class="hover:bg-gray-50">
+              <td class="p-3 border border-gray-300">气力输灰系统改造</td>
+              <td class="p-3 border border-gray-300">2.5*3</td>
+              <td class="p-3 border border-gray-300">2025年</td>
+              <td class="p-3 border border-gray-300">南通联海生物热电</td>
+            </tr>
+            <tr class="hover:bg-gray-50">
+              <td class="p-3 border border-gray-300">石灰粉输送系统</td>
+              <td class="p-3 border border-gray-300"></td>
+              <td class="p-3 border border-gray-300">2025年</td>
+              <td class="p-3 border border-gray-300">江苏太仓电厂</td>
+            </tr>
+            <tr class="hover:bg-gray-50">
+              <td class="p-3 border border-gray-300">气力输灰系统改造，圆顶阀旋转阀等</td>
+              <td class="p-3 border border-gray-300"></td>
+              <td class="p-3 border border-gray-300">2025年</td>
+              <td class="p-3 border border-gray-300">河北邯郸钢铁</td>
+            </tr>
+            <tr class="hover:bg-gray-50">
+              <td class="p-3 border border-gray-300">气力输灰系统</td>
+              <td class="p-3 border border-gray-300"></td>
+              <td class="p-3 border border-gray-300">2025年</td>
+              <td class="p-3 border border-gray-300">安钢集团永通球磨铸铁有限公司</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- 工程原理 -->
+  <section id="principle" class="py-12 bg-gray-100">
+    <!-- 标题栏 -->
+    <div class="section-title mb-10" style="background-image: url('https://picsum.photos/id/1025/1200/200'); background-size: cover; background-position: center;">
+      工程原理
+    </div>
+    
+    <div class="container mx-auto px-4">
+      <div class="flex flex-col lg:flex-row gap-10 items-center">
+        <div class="w-full lg:w-1/2">
+          <h2 class="text-2xl md:text-3xl font-bold mb-6 text-primary">正压浓相气力输送系统</h2>
+          <p class="text-gray-700 mb-6 leading-relaxed">
+            正压浓相气力输送技术具有系统简洁,布置灵活,性能可靠,自动化程度高,系统投资省,输送灰气比高,流速低,维护工作量小和年运行费用低等特点,深受广大用户的欢迎。
+          </p >
+          
+          <div class="space-y-6">
+            <div class="bg-white p-5 rounded-lg shadow-md card-hover">
+              <h3 class="text-xl font-semibold mb-2 flex items-center">
+                <i class="fa fa-lightbulb-o text-secondary mr-2"></i>
+                L型泵静压柱塞气力输送系统
+              </h3>
+              <p class="text-gray-600">采用静压输送原理，把物料在管道中挤压成柱塞状,利用压缩空气的静压，以极低的速度推移物料,完成物料的输送。</p >
+            </div>
+            
+            <div class="bg-white p-5 rounded-lg shadow-md card-hover">
+              <h3 class="text-xl font-semibold mb-2 flex items-center">
+                <i class="fa fa-cog text-secondary mr-2"></i>
+                T型泵集团流气力输送系统
+              </h3>
+              <p class="text-gray-600">T型泵只有一个承压部件,采用最好的除灰阀--圆顶阀,结构简单,性能可靠,维护工作量少。</p >
+            </div>
+            
+            <div class="bg-white p-5 rounded-lg shadow-md card-hover">
+              <h3 class="text-xl font-semibold mb-2 flex items-center">
+                <i class="fa fa-shield text-secondary mr-2"></i>
+                NPD 型泵动压悬浮气力输送系统
+              </h3>
+              <p class="text-gray-600">该系统依托动压悬浮原理，物料在气流推动下悬浮输送，减少与管道摩擦，降低磨损。</p >
+            </div>
+          </div>
+        </div>
+        
+        <div class="w-full lg:w-1/2">
+          <div class="relative">
+            <img src="../pictures/干式喷钙烟气脱硫系统.png" alt="干式喷钙烟气脱硫系统工程原理图示" class="w-full h-auto rounded-lg shadow-xl">
+            <div class="absolute -bottom-6 -left-6 bg-white p-4 rounded-lg shadow-lg max-w-xs card-hover hidden md:block">
+              <h4 class="font-bold text-primary mb-1">干式喷钙烟气脱硫系统工作流程示意图</h4>
+              <p class="text-sm text-gray-600">该系统具有配置简洁、能耗低、无污染、自动化程度高、投资省、脱硫效率高等优点</p >
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 流程图 -->
+      <div class="mt-16">
+        <h3 class="text-2xl font-bold mb-8 text-center text-primary">工程实施流程</h3>
+        <div class="relative">
+          <!-- 连接线 -->
+          <div class="hidden md:block absolute top-1/2 left-0 right-0 h-1 bg-secondary -translate-y-1/2 z-0"></div>
+          
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-6 relative z-10">
+            <div class="bg-white p-5 rounded-lg shadow-md text-center card-hover">
+              <div class="w-16 h-16 bg-secondary rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-4">
+                <i class="fa fa-file-text-o"></i>
+              </div>
+              <h4 class="font-bold mb-2">方案设计</h4>
+              <p class="text-sm text-gray-600">根据客户需求制定个性化解决方案</p >
+            </div>
+            
+            <div class="bg-white p-5 rounded-lg shadow-md text-center card-hover">
+              <div class="w-16 h-16 bg-secondary rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-4">
+                <i class="fa fa-line-chart"></i>
+              </div>
+              <h4 class="font-bold mb-2">设备安装</h4>
+              <p class="text-sm text-gray-600">专业团队现场安装调试设备</p >
+            </div>
+            
+            <div class="bg-white p-5 rounded-lg shadow-md text-center card-hover">
+              <div class="w-16 h-16 bg-secondary rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-4">
+                <i class="fa fa-check-circle"></i>
+              </div>
+              <h4 class="font-bold mb-2">验收交付</h4>
+              <p class="text-sm text-gray-600">项目验收合格后交付客户使用</p >
+            </div>
+            
+            <div class="bg-white p-5 rounded-lg shadow-md text-center card-hover">
+              <div class="w-16 h-16 bg-secondary rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-4">
+                <i class="fa fa-life-ring"></i>
+              </div>
+              <h4 class="font-bold mb-2">售后服务</h4>
+              <p class="text-sm text-gray-600">提供长期技术支持和维护服务</p >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 产品展示 -->
+  <section id="products" class="py-12 bg-white">
+    <!-- 标题栏 -->
+    <div class="section-title mb-10" style="background-image: url('https://picsum.photos/id/1040/1200/200'); background-size: cover; background-position: center;">
+      产品展示
+    </div>
+    
+    <div class="container mx-auto px-4">
+      <h2 class="text-2xl md:text-3xl font-bold mb-8 text-center text-primary">核心产品系列</h2>
+      
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- 产品1 -->
+        <div class="bg-gray-50 rounded-lg overflow-hidden shadow-md card-hover">
+          <div class="h-48 overflow-hidden">
+            <img src="../pictures/QQF充气式圆顶阀.png" alt="QQF充气式圆顶阀" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+          </div>
+          <div class="p-4">
+            <h3 class="text-xl font-semibold mb-2 text-primary">QQF充气式圆顶阀</h3>
+            <p class="text-gray-600 text-sm">充气式圆顶阀是一气体输送固体物料的开关器,起到开通和隔断管道空间的作用。它适用于通过 松散的,干燥。非粘性的,可流动的固体物料的密封输送系统,特别适用于火电厂的灰渣处理系统。</p >
+          </div>
+        </div>
+        
+        <!-- 产品2 -->
+        <div class="bg-gray-50 rounded-lg overflow-hidden shadow-md card-hover">
+          <div class="h-48 overflow-hidden">
+            <img src="../pictures/耐磨陶瓷旋转阀.jpg" alt="耐磨陶瓷旋转阀" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+          </div>
+          <div class="p-4">
+            <h3 class="text-xl font-semibold mb-2 text-primary">耐磨陶瓷旋转阀</h3>
+            <p class="text-gray-600 text-sm">本阀门具有密封性能好,耐高温,耐磨性强,启闭灵活,无卡灰及积灰现象,使用寿命长等特点。</p >
+          </div>
+        </div>
+        
+        <!-- 产品3 -->
+        <div class="bg-gray-50 rounded-lg overflow-hidden shadow-md card-hover">
+          <div class="h-48 overflow-hidden">
+            <img src="https://picsum.photos/id/139/400/300" alt="精密检测仪器" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+          </div>
+          <div class="p-4">
+            <h3 class="text-xl font-semibold mb-2 text-primary">精密检测仪器</h3>
+            <p class="text-gray-600 text-sm">检测精度达0.001mm，支持多维度数据分析与报告生成。</p >
+          </div>
+        </div>
+        
+        <!-- 产品4 -->
+        <div class="bg-gray-50 rounded-lg overflow-hidden shadow-md card-hover">
+          <div class="h-48 overflow-hidden">
+            <img src="https://picsum.photos/id/149/400/300" alt="自动化生产线" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+          </div>
+          <div class="p-4">
+            <h3 class="text-xl font-semibold mb-2 text-primary">自动化生产线</h3>
+            <p class="text-gray-600 text-sm">全流程自动化操作，生产效率提升50%，减少人工成本。</p >
+          </div>
+        </div>
+      </div>
+      
+      <!-- 产品特点总结 -->
+      <div class="mt-12 bg-primary/5 p-6 rounded-lg">
+        <h3 class="text-xl font-bold mb-4 text-center">产品核心优势</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+          <div class="p-4">
+            <i class="fa fa-bolt text-3xl text-secondary mb-2"></i>
+            <p class="font-medium">高效稳定</p >
+          </div>
+          <div class="p-4">
+            <i class="fa fa-leaf text-3xl text-secondary mb-2"></i>
+            <p class="font-medium">绿色环保</p >
+          </div>
+          <div class="p-4">
+            <i class="fa fa-cogs text-3xl text-secondary mb-2"></i>
+            <p class="font-medium">智能便捷</p >
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 联系方式 -->
+  <section id="contact" class="py-12 relative">
+    <!-- 背景图片 -->
+    <img src="https://picsum.photos/id/1031/1920/800" alt="联系方式背景" class="absolute inset-0 w-full h-full object-cover">
+    <div class="absolute inset-0 bg-primary/70"></div>
+    
+    <div class="container mx-auto px-4 relative z-10 text-white">
+      <div class="section-title mb-10 bg-transparent">
+        联系方式
+      </div>
+      
+      <div class="flex flex-col md:flex-row gap-10 items-center">
+        <div class="w-full md:w-1/2">
+          <h2 class="text-2xl md:text-3xl font-bold mb-6">联系我们</h2>
+          <p class="mb-8 leading-relaxed">
+            无论您有任何疑问或需求，都可以通过以下方式联系我们，我们将在24小时内回复您。
+          </p >
+          
+          <div class="space-y-6">
+            <div class="flex items-start">
+              <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                <i class="fa fa-map-marker text-2xl"></i>
+              </div>
+              <div>
+                <h3 class="text-xl font-semibold mb-1">公司地址</h3>
+                <p>江苏省镇江市扬中市油坊镇长旺村</p >
+              </div>
+            </div>
+            
+            <div class="flex items-start">
+              <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                <i class="fa fa-phone text-2xl"></i>
+              </div>
+              <div>
+                <h3 class="text-xl font-semibold mb-1">联系电话</h3>
+                <p>13812355789/15162937932</p >
+              </div>
+            </div>
+            
+            <div class="flex items-start">
+              <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                <i class="fa fa-envelope text-2xl"></i>
+              </div>
+              <div>
+                <h3 class="text-xl font-semibold mb-1">电子邮箱</h3>
+                <p>zhuLirong3@163.com</p >
+              </div>
+            </div>
+            
+            <div class="flex items-start">
+              <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                <i class="fa fa-clock-o text-2xl"></i>
+              </div>
+              <div>
+                <h3 class="text-xl font-semibold mb-1">传真</h3>
+                <p>0511-88526414</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- 社交媒体 -->
+          <div class="mt-8">
+            <h3 class="text-xl font-semibold mb-4">关注我们</h3>
+            <div class="flex gap-4">
+              <a href=" " class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center hover:bg-white/40 transition-colors">
+                <i class="fa fa-weixin text-xl"></i>
+              </a >
+              <a href="#" class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center hover:bg-white/40 transition-colors">
+                <i class="fa fa-weibo text-xl"></i>
+              </a >
+              <a href="#" class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center hover:bg-white/40 transition-colors">
+                <i class="fa fa-linkedin text-xl"></i>
+              </a >
+              <a href="#" class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center hover:bg-white/40 transition-colors">
+                <i class="fa fa-youtube-play text-xl"></i>
+              </a >
+            </div>
+          </div>
+        </div>
+        
+        <div class="w-full md:w-1/2 bg-white/10 backdrop-blur-sm p-6 rounded-lg shadow-lg">
+          <h3 class="text-2xl font-bold mb-6 text-center">留言咨询</h3>
+          <form>
+            <div class="mb-4">
+              <label for="name" class="block mb-2">姓名</label>
+              <input type="text" id="name" class="w-full px-4 py-2 rounded-md bg-white/20 border border-white/30 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-secondary" placeholder="请输入您的姓名">
+            </div>
+            
+            <div class="mb-4">
+              <label for="phone" class="block mb-2">电话</label>
+              <input type="tel" id="phone" class="w-full px-4 py-2 rounded-md bg-white/20 border border-white/30 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-secondary" placeholder="请输入您的电话">
+            </div>
+            
+            <div class="mb-4">
+              <label for="email" class="block mb-2">邮箱</label>
+              <input type="email" id="email" class="w-full px-4 py-2 rounded-md bg-white/20 border border-white/30 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-secondary" placeholder="请输入您的邮箱">
+            </div>
+            
+            <div class="mb-6">
+              <label for="message" class="block mb-2">留言内容</label>
+              <textarea id="message" rows="4" class="w-full px-4 py-2 rounded-md bg-white/20 border border-white/30 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-secondary" placeholder="请输入您的留言内容"></textarea>
+            </div>
+            
+            <button type="submit" class="w-full py-3 bg-secondary hover:bg-secondary/90 text-white font-bold rounded-md transition-colors">
+              提交留言
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 页脚 -->
+  <footer class="bg-primary text-white py-6">
+    <div class="container mx-auto px-4 text-center">
+      <p>&copy; 2025 镇江立凯电力设备有限公司 朱采阳 | 扬中市油坊镇长旺村</p >
+    </div>
+  </footer>
+
+  <!-- 平滑滚动脚本 -->
+  <script>
+    // 平滑滚动到指定区域
+    function scrollToSection(sectionId) {
+      const section = document.getElementById(sectionId);
+      if (section) {
+        window.scrollTo({
+          top: section.offsetTop - 80, // 减去导航栏高度，避免被遮挡
+          behavior: 'smooth' // 平滑滚动效果
+        });
+      }
     }
-    Point.prototype.clone = function() {
-      return new Point(this.x, this.y);
-    };
-    Point.prototype.length = function(length) {
-      if (typeof length == 'undefined')
-        return Math.sqrt(this.x * this.x + this.y * this.y);
-      this.normalize();
-      this.x *= length;
-      this.y *= length;
-      return this;
-    };
 
-    Point.prototype.normalize = function() {
-      var length = this.length();
-      this.x /= length;
-      this.y /= length;
-      return this;
-    };
-    return Point;
-  })();
-
-  var Particle = (function() {
-    function Particle() {
-      this.position = new Point();
-      this.velocity = new Point();
-      this.acceleration = new Point();
-      this.age = 0;
-    }
-    Particle.prototype.initialize = function(x, y, dx, dy) {
-      this.position.x = x;
-      this.position.y = y;
-      this.velocity.x = dx;
-      this.velocity.y = dy;
-      this.acceleration.x = dx * settings.particles.effect;
-      this.acceleration.y = dy * settings.particles.effect;
-      this.age = 0;
-    };
-    Particle.prototype.update = function(deltaTime) {
-      this.position.x += this.velocity.x * deltaTime;
-      this.position.y += this.velocity.y * deltaTime;
-      this.velocity.x += this.acceleration.x * deltaTime;
-      this.velocity.y += this.acceleration.y * deltaTime;
-      this.age += deltaTime;
-    };
-
-    Particle.prototype.draw = function(context, image) {
-      function ease(t) {
-        return (--t) * t * t + 1;
+    // 滚动时改变导航栏样式
+    window.addEventListener('scroll', function() {
+      const nav = document.getElementById('main-nav');
+      if (window.scrollY > 100) {
+        nav.classList.add('bg-primary/90', 'backdrop-blur-sm');
+        nav.classList.remove('bg-transparent');
+      } else {
+        nav.classList.remove('bg-primary/90', 'backdrop-blur-sm');
       }
-      var size = image.width * ease(this.age / settings.particles.duration);
-      context.globalAlpha = 1 - this.age / settings.particles.duration;
-      context.drawImage(image, this.position.x - size / 2, this.position.y - size / 2, size, size);
-    };
-    return Particle;
-  })();
-  /*
-
-  * ParticlePool class
-
-  */
-  var ParticlePool = (function() {
-    var particles,
-            firstActive = 0,
-            firstFree = 0,
-            duration = settings.particles.duration;
-    function ParticlePool(length) {
-// create and populate particle pool
-      particles = new Array(length);
-      for (var i = 0; i < particles.length; i++)
-        particles[i] = new Particle();
-    }
-    ParticlePool.prototype.add = function(x, y, dx, dy) {
-      particles[firstFree].initialize(x, y, dx, dy);
-// handle circular queue
-      firstFree++;
-      if (firstFree == particles.length) firstFree = 0;
-      if (firstActive == firstFree ) firstActive++;
-      if (firstActive == particles.length) firstActive = 0;
-    };
-    ParticlePool.prototype.update = function(deltaTime) {
-      var i;
-// update active particles
-      if (firstActive < firstFree) {
-        for (i = firstActive; i < firstFree; i++)
-          particles[i].update(deltaTime);
-      }
-      if (firstFree < firstActive) {
-        for (i = firstActive; i < particles.length; i++)
-          particles[i].update(deltaTime);
-        for (i = 0; i < firstFree; i++)
-          particles[i].update(deltaTime);
-      }
-// remove inactive particles
-      while (particles[firstActive].age >= duration && firstActive != firstFree) {
-        firstActive++;
-        if (firstActive == particles.length) firstActive = 0;
-      }
-    };
-    ParticlePool.prototype.draw = function(context, image) {
-// draw active particles
-      if (firstActive < firstFree) {
-        for (i = firstActive; i < firstFree; i++)
-          particles[i].draw(context, image);
-      }
-      if (firstFree < firstActive) {
-        for (i = firstActive; i < particles.length; i++)
-          particles[i].draw(context, image);
-        for (i = 0; i < firstFree; i++)
-          particles[i].draw(context, image);
-      }
-    };
-    return ParticlePool;
-  })();
-  /*
-
-  * Putting it all together
-
-  */
-  (function(canvas) {
-    var context = canvas.getContext('2d'),
-            particles = new ParticlePool(settings.particles.length),
-            particleRate = settings.particles.length / settings.particles.duration, // particles/sec
-            time;
-// get point on heart with -PI <= t <= PI
-    function pointOnHeart(t) {
-      return new Point(
-              160 * Math.pow(Math.sin(t), 3),
-              130 * Math.cos(t) - 50 * Math.cos(2 * t) - 20 * Math.cos(3 * t) - 10 * Math.cos(4 * t) + 25
-      );
-
-    }
-
-// creating the particle image using a dummy canvas
-
-    var image = (function() {
-      var canvas = document.createElement('canvas'),
-              context = canvas.getContext('2d');
-      canvas.width = settings.particles.size;
-      canvas.height = settings.particles.size;
-// helper function to create the path
-      function to(t) {
-        var point = pointOnHeart(t);
-        point.x = settings.particles.size / 2 + point.x * settings.particles.size / 350;
-        point.y = settings.particles.size / 2 - point.y * settings.particles.size / 350;
-        return point;
-      }
-// create the path
-      context.beginPath();
-      var t = -Math.PI;
-      var point = to(t);
-      context.moveTo(point.x, point.y);
-      while (t < Math.PI) {
-        t += 0.01; // baby steps!
-        point = to(t);
-        context.lineTo(point.x, point.y);
-      }
-      context.closePath();
-// create the fill
-      context.fillStyle = '#ff30c5';
-      // context.fillStyle = '#ea80b0';
-      context.fill();
-// create the image
-      var image = new Image();
-      image.src = canvas.toDataURL();
-      return image;
-    })();
-// render that thing!
-    function render() {
-// next animation frame
-      requestAnimationFrame(render);
-// update time
-      var newTime = new Date().getTime() / 1000,
-              deltaTime = newTime - (time || newTime);
-      time = newTime;
-// clear canvas
-      context.clearRect(0, 0, canvas.width, canvas.height);
-// create new particles
-      var amount = particleRate * deltaTime;
-      for (var i = 0; i < amount; i++) {
-        var pos = pointOnHeart(Math.PI - 2 * Math.PI * Math.random());
-        var dir = pos.clone().length(settings.particles.velocity);
-        particles.add(canvas.width / 2 + pos.x, canvas.height / 2 - pos.y, dir.x, -dir.y);
-      }
-// update and draw particles
-      particles.update(deltaTime);
-      particles.draw(context, image);
-    }
-// handle (re-)sizing of the canvas
-    function onResize() {
-      canvas.width = canvas.clientWidth;
-      canvas.height = canvas.clientHeight;
-    }
-    window.onresize = onResize;
-// delay rendering bootstrap
-    setTimeout(function() {
-      onResize();
-      render();
-    }, 10);
-  })(document.getElementById('pinkboard'));
-</script>
-<div class="namebox">
-  <h1>朱采阳&#10084;&#65039;立凯电力</h1>
-</div>
+    });
+  </script>
+</body>
 </body>
 </html>
