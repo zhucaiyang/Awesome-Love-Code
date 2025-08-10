@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>镇江立凯电力设备有限公司</title>
-  <!-- 引入Tailwind CSS -->
+<!-- 引入Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- 引入Font Awesome -->
   <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -42,48 +42,125 @@
       .card-hover {
         @apply transition-all duration-300 hover:shadow-xl hover:-translate-y-1;
       }
+      .nav-link {
+        @apply px-3 py-2 rounded-md transition-colors duration-200 hover:opacity-80;
+      }
+      .nav-link-active {
+        @apply font-semibold;
+      }
     }
   </style>
-  </style>
+  <style>
+    /* 透明导航在浅色背景上的可读性增强 */
+    .nav-contrast * {
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
+    }
 
+    /* 顶部导航滑动下划线 */
+    #desktop-nav-links { position: relative; }
+    #desktop-nav-links #nav-underline {
+      position: absolute; left: 0; bottom: -2px; height: 2px; width: 0;
+      background: currentColor; /* 跟随文字色（深色/浅色） */
+      transition: left .25s ease, width .25s ease, background-color .25s ease;
+      pointer-events: none;
+    }
+
+    /* 产品案例表格：默认铺满（cover）；悬停时在当前位置弹出、越出格子，完整显示但限制为中等大小 */
+    /* 方案A：使用专用类（如果后续你愿意加类，可继续使用） */
+    #case-table td.product-img-cell { position: relative; }
+    #case-table td.product-img-cell .product-box { overflow: hidden; }
+    #case-table td.product-img-cell img {
+      width: 100%; height: 100%; object-fit: cover; transition: all .22s ease; display: block;
+    }
+    #case-table td.product-img-cell:hover,
+    #case-table td.product-img-cell:has(+ td.product-name:hover) { z-index: 40; }
+    #case-table td.product-img-cell:hover .product-box,
+    #case-table td.product-img-cell:has(+ td.product-name:hover) .product-box { overflow: visible; }
+    #case-table td.product-img-cell:hover img,
+    #case-table td.product-img-cell:has(+ td.product-name:hover) img {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      width: auto; height: auto; object-fit: contain;
+      max-width: 400px; /* 适中，不会太大 */
+      max-height: 300px;
+      box-shadow: 0 8px 24px rgba(0,0,0,.28);
+      background: #fff; border-radius: 6px;
+    }
+
+    /* 方案B：不改HTML结构，自动识别含图片的单元格实现同样效果 */
+    #case-table td:has(img) { position: relative; }
+    #case-table td:has(img) > div { overflow: hidden; }
+    #case-table td:has(img) img {
+      width: 100%; height: 100%; object-fit: cover; transition: all .22s ease; display: block;
+    }
+    #case-table td:has(img):hover,
+    #case-table td:has(img):has(+ td:hover) { z-index: 40; }
+    #case-table td:has(img):hover > div,
+    #case-table td:has(img):has(+ td:hover) > div { overflow: visible; }
+    #case-table td:has(img):hover img,
+    #case-table td:has(img):has(+ td:hover) img {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      width: auto; height: auto; object-fit: contain;
+      max-width: 420px; max-height: 320px;
+      box-shadow: 0 8px 24px rgba(0,0,0,.28); background: #fff; border-radius: 6px;
+    }
+  </style>
 </head>
-<body>
 <body class="font-sans text-gray-800 overflow-x-hidden">
-  <!-- 导航按钮 (固定在首页图上方) -->
-  <nav id="main-nav" class="fixed top-4 left-0 right-0 z-50 flex justify-center gap-2 md:gap-4 px-4">
-    <button class="nav-button" onclick="scrollToSection('home')">
-      <i class="fa fa-home mr-1"></i> 首页
-    </button>
-    <button class="nav-button" onclick="scrollToSection('about')">
-      <i class="fa fa-building mr-1"></i> 企业简介
-    </button>
-    <button class="nav-button" onclick="scrollToSection('achievements')">
-      <i class="fa fa-trophy mr-1"></i> 资质业绩
-    </button>
-    <button class="nav-button" onclick="scrollToSection('principle')">
-      <i class="fa fa-cogs mr-1"></i> 工程原理
-    </button>
-    <button class="nav-button" onclick="scrollToSection('products')">
-      <i class="fa fa-cube mr-1"></i> 产品展示
-    </button>
-    <button class="nav-button" onclick="scrollToSection('contact')">
-      <i class="fa fa-envelope mr-1"></i> 联系方式
-    </button>
+  <!-- 顶部导航栏 -->
+  <nav id="main-nav" class="fixed top-0 left-0 right-0 z-50 bg-white/95 text-primary shadow-sm transition-colors duration-300">
+    <div class="max-w-7xl mx-auto px-4">
+      <div id="nav-bar" class="h-16 flex items-center justify-between">
+        <!-- 品牌标识 -->
+        <a href="#home" class="flex items-center gap-2 font-bold text-lg nav-link" data-nav-link>
+          <img src="pictures/logo.png" alt="镇江立凯电力设备有限公司 Logo" class="h-8 w-8 object-contain"/>
+          镇江立凯电力设备有限公司
+        </a>
+
+        <!-- 桌面导航 -->
+        <div id="desktop-nav-links" class="hidden md:flex items-center gap-1 relative">
+          <a href="#home" class="nav-link" data-nav-link><i class="fa fa-home mr-1"></i> 首页</a>
+          <a href="#about" class="nav-link" data-nav-link><i class="fa fa-building mr-1"></i> 企业简介</a>
+          <a href="#achievements" class="nav-link" data-nav-link><i class="fa fa-trophy mr-1"></i> 资质业绩</a>
+          <a href="#principle" class="nav-link" data-nav-link><i class="fa fa-cogs mr-1"></i> 工程原理</a>
+          <a href="#products" class="nav-link" data-nav-link><i class="fa fa-cube mr-1"></i> 产品展示</a>
+          <a href="#contact" class="nav-link" data-nav-link><i class="fa fa-envelope mr-1"></i> 联系方式</a>
+          <span id="nav-underline" aria-hidden="true"></span>
+        </div>
+
+        <!-- 移动端按钮 -->
+        <button id="nav-toggle" class="md:hidden inline-flex items-center justify-center p-2 rounded-md ring-1 ring-white/40" aria-controls="mobile-menu" aria-expanded="false">
+          <span class="sr-only">打开主菜单</span>
+          <i class="fa fa-bars text-xl"></i>
+        </button>
+      </div>
+
+      <!-- 移动端菜单 -->
+      <div id="mobile-menu" class="md:hidden hidden mt-2 rounded-md bg-white/90 backdrop-blur-sm shadow-md">
+        <div class="px-4 py-3 flex flex-col gap-2 text-primary">
+          <a href="#home" class="nav-link" data-nav-link><i class="fa fa-home mr-1"></i> 首页</a>
+          <a href="#about" class="nav-link" data-nav-link><i class="fa fa-building mr-1"></i> 企业简介</a>
+          <a href="#achievements" class="nav-link" data-nav-link><i class="fa fa-trophy mr-1"></i> 资质业绩</a>
+          <a href="#principle" class="nav-link" data-nav-link><i class="fa fa-cogs mr-1"></i> 工程原理</a>
+          <a href="#products" class="nav-link" data-nav-link><i class="fa fa-cube mr-1"></i> 产品展示</a>
+          <a href="#contact" class="nav-link" data-nav-link><i class="fa fa-envelope mr-1"></i> 联系方式</a>
+        </div>
+      </div>
+    </div>
   </nav>
 
   <!-- 首页图片区域 -->
   <section id="home" class="relative h-screen flex items-center justify-center">
-    <img src="..\pictures\首页.png" alt="首页图片" class="w-full h-full object-cover">
+    <img src="pictures\首页.png" alt="首页图片" class="w-full h-full object-cover">
     <div class="absolute inset-0 bg-black/30"></div>
     <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 text-white animate-bounce">
-      <button onclick="scrollToSection('about')" class="text-4xl">
+      <a href="#about" class="text-4xl">
         <i class="fa fa-angle-down"></i>
-      </button>
+      </a>
     </div>
   </section>
 
   <!-- 企业简介 -->
-  <section id="about" class="py-12 bg-gray-50">
+  <section id="about" class="py-12 bg-gray-50 scroll-mt-24">
     <!-- 标题栏 -->
     <div class="section-title mb-10" style="background-image: url('https://picsum.photos/id/1015/1200/200'); background-size: cover; background-position: center;">
       企业简介
@@ -109,7 +186,7 @@
   </section>
 
   <!-- 资质业绩 -->
-  <section id="achievements" class="py-12 bg-white">
+  <section id="achievements" class="py-12 bg-white scroll-mt-24">
     <!-- 标题栏 -->
     <div class="section-title mb-10" style="background-image: url('https://picsum.photos/id/1019/1200/200'); background-size: cover; background-position: center;">
       资质业绩
@@ -121,7 +198,7 @@
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
         <div class="bg-gray-50 p-6 rounded-lg shadow-md card-hover">
           <div class="h-48 overflow-hidden rounded mb-4">
-            <img src="../pictures/质量管理体系认证证书.png" alt="质量管理体系认证证书" class="w-full h-full object-cover">
+            <img src="pictures/质量管理体系认证证书.png" alt="质量管理体系认证证书" class="w-full h-full object-cover">
           </div>
           <h3 class="text-xl font-semibold mb-2">质量管理体系认证证书</h3>
           <p class="text-gray-600">公司通过新标元（上海）有限公司质量管理体系认证，确保产品质量稳定可靠。</p >
@@ -129,7 +206,7 @@
         
         <div class="bg-gray-50 p-6 rounded-lg shadow-md card-hover">
           <div class="h-48 overflow-hidden rounded mb-4">
-            <img src="../pictures/营业执照.png" alt="营业执照" class="w-full h-full object-cover">
+            <img src="pictures/营业执照.png" alt="营业执照" class="w-full h-full object-cover">
           </div>
           <h3 class="text-xl font-semibold mb-2">营业执照</h3>
           <p class="text-gray-600">拥有国家营业执照，项目有保障产品有信心。</p >
@@ -137,7 +214,7 @@
         
         <div class="bg-gray-50 p-6 rounded-lg shadow-md card-hover">
           <div class="h-48 overflow-hidden rounded mb-4">
-            <img src="../pictures/业绩表.png" alt="业绩表" class="w-full h-full object-cover">
+            <img src="pictures/业绩表.png" alt="业绩表" class="w-full h-full object-cover">
           </div>
           <h3 class="text-xl font-semibold mb-2">业绩拔尖</h3>
           <p class="text-gray-600">凭借优秀产品资质达成多项项目合作，期待您的光临。</p >
@@ -206,7 +283,7 @@
   </section>
 
   <!-- 工程原理 -->
-  <section id="principle" class="py-12 bg-gray-100">
+  <section id="principle" class="py-12 bg-gray-100 scroll-mt-24">
     <!-- 标题栏 -->
     <div class="section-title mb-10" style="background-image: url('https://picsum.photos/id/1025/1200/200'); background-size: cover; background-position: center;">
       工程原理
@@ -249,7 +326,7 @@
         
         <div class="w-full lg:w-1/2">
           <div class="relative">
-            <img src="../pictures/干式喷钙烟气脱硫系统.png" alt="干式喷钙烟气脱硫系统工程原理图示" class="w-full h-auto rounded-lg shadow-xl">
+            <img src="pictures/干式喷钙烟气脱硫系统.png" alt="干式喷钙烟气脱硫系统工程原理图示" class="w-full h-auto rounded-lg shadow-xl">
             <div class="absolute -bottom-6 -left-6 bg-white p-4 rounded-lg shadow-lg max-w-xs card-hover hidden md:block">
               <h4 class="font-bold text-primary mb-1">干式喷钙烟气脱硫系统工作流程示意图</h4>
               <p class="text-sm text-gray-600">该系统具有配置简洁、能耗低、无污染、自动化程度高、投资省、脱硫效率高等优点</p >
@@ -304,7 +381,7 @@
   </section>
 
   <!-- 产品展示 -->
-  <section id="products" class="py-12 bg-white">
+  <section id="products" class="py-12 bg-white scroll-mt-24">
     <!-- 标题栏 -->
     <div class="section-title mb-10" style="background-image: url('https://picsum.photos/id/1040/1200/200'); background-size: cover; background-position: center;">
       产品展示
@@ -317,7 +394,7 @@
         <!-- 产品1 -->
         <div class="bg-gray-50 rounded-lg overflow-hidden shadow-md card-hover">
           <div class="h-48 overflow-hidden">
-            <img src="../pictures/QQF充气式圆顶阀.png" alt="QQF充气式圆顶阀" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+            <img src="pictures/QQF充气式圆顶阀.png" alt="QQF充气式圆顶阀" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
           </div>
           <div class="p-4">
             <h3 class="text-xl font-semibold mb-2 text-primary">QQF充气式圆顶阀</h3>
@@ -328,60 +405,242 @@
         <!-- 产品2 -->
         <div class="bg-gray-50 rounded-lg overflow-hidden shadow-md card-hover">
           <div class="h-48 overflow-hidden">
-            <img src="../pictures/耐磨陶瓷旋转阀.jpg" alt="耐磨陶瓷旋转阀" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+            <img src="pictures/耐磨陶瓷旋转阀.jpg" alt="耐磨陶瓷旋转阀" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
           </div>
           <div class="p-4">
             <h3 class="text-xl font-semibold mb-2 text-primary">耐磨陶瓷旋转阀</h3>
-            <p class="text-gray-600 text-sm">本阀门具有密封性能好,耐高温,耐磨性强,启闭灵活,无卡灰及积灰现象,使用寿命长等特点。</p >
+            <p class="text-gray-600 text-sm">通过陶瓷材质的超强耐磨性、耐腐蚀性和耐高温性，解决传统旋转阀在磨蚀、高温、腐蚀工况下的“短命、漏料、卡涩”痛点，实现长周期稳定运行，降低综合成本。</p >
           </div>
         </div>
         
         <!-- 产品3 -->
         <div class="bg-gray-50 rounded-lg overflow-hidden shadow-md card-hover">
           <div class="h-48 overflow-hidden">
-            <img src="https://picsum.photos/id/139/400/300" alt="精密检测仪器" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+            <img src="pictures/纽普兰DN300.DN200圆顶阀及配件.jpg" alt="纽普兰圆顶阀" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
           </div>
           <div class="p-4">
-            <h3 class="text-xl font-semibold mb-2 text-primary">精密检测仪器</h3>
-            <p class="text-gray-600 text-sm">检测精度达0.001mm，支持多维度数据分析与报告生成。</p >
+            <h3 class="text-xl font-semibold mb-2 text-primary">纽普兰圆顶阀</h3>
+            <p class="text-gray-600 text-sm">通过密封技术、耐磨设计、智能控制和模块化结构，实现了高可靠性、低维护成本和广泛适用性，是气力输送系统的理想选择。其创新设计不仅提升了工业生产效率，还通过预测性维护和节能特性推动了可持续发展。</p >
           </div>
         </div>
         
         <!-- 产品4 -->
         <div class="bg-gray-50 rounded-lg overflow-hidden shadow-md card-hover">
           <div class="h-48 overflow-hidden">
-            <img src="https://picsum.photos/id/149/400/300" alt="自动化生产线" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+            <img src="pictures/灰库系统.png" alt="灰库系统" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
           </div>
           <div class="p-4">
-            <h3 class="text-xl font-semibold mb-2 text-primary">自动化生产线</h3>
-            <p class="text-gray-600 text-sm">全流程自动化操作，生产效率提升50%，减少人工成本。</p >
+            <h3 class="text-xl font-semibold mb-2 text-primary">灰库系统</h3>
+            <p class="text-gray-600 text-sm">灰库系统由灰库本体、灰库气化风系统、卸科系统、库顶设备、料位计等组成,主要设备有:灰库、罗茨风机、空气加热器、气化槽、双轴搅拌机、干灰散装机、电脉冲布袋除尘器、压力和真空释放阀</p >
           </div>
         </div>
       </div>
       
-      <!-- 产品特点总结 -->
+      <!-- 产品总结 -->
       <div class="mt-12 bg-primary/5 p-6 rounded-lg">
-        <h3 class="text-xl font-bold mb-4 text-center">产品核心优势</h3>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
-          <div class="p-4">
-            <i class="fa fa-bolt text-3xl text-secondary mb-2"></i>
-            <p class="font-medium">高效稳定</p >
-          </div>
-          <div class="p-4">
-            <i class="fa fa-leaf text-3xl text-secondary mb-2"></i>
-            <p class="font-medium">绿色环保</p >
-          </div>
-          <div class="p-4">
-            <i class="fa fa-cogs text-3xl text-secondary mb-2"></i>
-            <p class="font-medium">智能便捷</p >
-          </div>
+        <h3 class="text-xl font-bold mb-4 text-center">产品案例</h3>
+        <div class="text-center">
+          <table id="case-table" class="w-full table-fixed border-collapse text-sm md:text-base">
+            <tbody>
+              <tr>
+                <!-- 1: 图片 -->
+                <td class="border border-gray-300 p-2 align-middle product-img-cell">
+                  <div class="product-box w-full h-24 md:h-32 flex items-center justify-center">
+                    <img src="pictures/QQF充气式圆顶阀.png" alt="QQF充气式圆顶阀" />
+                  </div>
+                </td>
+                <!-- 1: 名称 -->
+                <td class="border border-gray-300 p-2 text-center align-middle font-medium product-name">QQF充气式圆顶阀</td>
+
+                <!-- 2: 图片 -->
+                <td class="border border-gray-300 p-2 align-middle product-img-cell">
+                  <div class="product-box w-full h-24 md:h-32 flex items-center justify-center">
+                    <img src="pictures/DN300圆顶阀.jpg" alt="DN300圆顶阀" />
+                  </div>
+                </td>
+                <!-- 2: 名称 -->
+                <td class="border border-gray-300 p-2 text-center align-middle font-medium product-name">DN300圆顶阀</td>
+
+                <!-- 3: 图片 -->
+                <td class="border border-gray-300 p-2 align-middle product-img-cell">
+                  <div class="product-box w-full h-24 md:h-32 flex items-center justify-center">
+                    <img src="pictures/DN200圆顶阀.jpg" alt="DN200圆顶阀" />
+                  </div>
+                </td>
+                <!-- 3: 名称 -->
+                <td class="border border-gray-300 p-2 text-center align-middle font-medium product-name">DN200圆顶阀</td>
+
+                <!-- 4: 图片 -->
+                <td class="border border-gray-300 p-2 align-middle product-img-cell">
+                  <div class="product-box w-full h-24 md:h-32 flex items-center justify-center">
+                    <img src="pictures/耐磨陶瓷旋转阀.jpg" alt="耐磨陶瓷旋转阀" />
+                  </div>
+                </td>
+                <!-- 4: 名称 -->
+                <td class="border border-gray-300 p-2 text-center align-middle font-medium product-name">耐磨陶瓷旋转阀</td>
+              </tr>
+
+              <tr>
+                <td class="border border-gray-300 p-2 align-middle product-img-cell">
+                  <div class="product-box w-full h-24 md:h-32 flex items-center justify-center">
+                    <img src="pictures/纽普兰DN300.DN200圆顶阀及配件.jpg" alt="纽普兰圆顶阀及配件" />
+                  </div>
+                </td>
+                <td class="border border-gray-300 p-2 text-center align-middle font-medium product-name">纽普兰圆顶阀及配件</td>
+
+                <td class="border border-gray-300 p-2 align-middle product-img-cell">
+                  <div class="product-box w-full h-24 md:h-32 flex items-center justify-center">
+                    <img src="pictures/圆顶阀球顶.jpg" alt="圆顶阀球顶" />
+                  </div>
+                </td>
+                <td class="border border-gray-300 p-2 text-center align-middle font-medium product-name">圆顶阀球顶</td>
+
+                <td class="border border-gray-300 p-2 align-middle product-img-cell">
+                  <div class="product-box w-full h-24 md:h-32 flex items-center justify-center">
+                    <img src="pictures/圆顶阀气缸.jpg" alt="圆顶阀气缸" />
+                  </div>
+                </td>
+                <td class="border border-gray-300 p-2 text-center align-middle font-medium product-name">圆顶阀气缸</td>
+
+                <td class="border border-gray-300 p-2 align-middle product-img-cell">
+                  <div class="product-box w-full h-24 md:h-32 flex items-center justify-center">
+                    <img src="pictures/圆顶阀密封圈.jpg" alt="圆顶阀密封圈" />
+                  </div>
+                </td>
+                <td class="border border-gray-300 p-2 text-center align-middle font-medium product-name">圆顶阀密封圈</td>
+              </tr>
+              <!-- 第3行：从此行起使用 pictures/产品 下的图片与名称 -->
+              <tr>
+                <td class="border border-gray-300 p-2 align-middle product-img-cell">
+                  <div class="product-box w-full h-24 md:h-32 flex items-center justify-center">
+                    <img src="pictures/产品/DN300密封旋转给料阀.jpg" alt="DN300密封旋转给料阀" />
+                  </div>
+                </td>
+                <td class="border border-gray-300 p-2 text-center align-middle font-medium product-name">DN300密封旋转给料阀</td>
+
+                <td class="border border-gray-300 p-2 align-middle product-img-cell">
+                  <div class="product-box w-full h-24 md:h-32 flex items-center justify-center">
+                    <img src="pictures/产品/三通旋塞阀.jpg" alt="三通旋塞阀" />
+                  </div>
+                </td>
+                <td class="border border-gray-300 p-2 text-center align-middle font-medium product-name">三通旋塞阀</td>
+
+                <td class="border border-gray-300 p-2 align-middle product-img-cell">
+                  <div class="product-box w-full h-24 md:h-32 flex items-center justify-center">
+                    <img src="pictures/产品/不锈钢密封旋转给料机.jpg" alt="不锈钢密封旋转给料机" />
+                  </div>
+                </td>
+                <td class="border border-gray-300 p-2 text-center align-middle font-medium product-name">不锈钢密封旋转给料机</td>
+
+                <td class="border border-gray-300 p-2 align-middle product-img-cell">
+                  <div class="product-box w-full h-24 md:h-32 flex items-center justify-center">
+                    <img src="pictures/产品/压力真空释放阀.jpg" alt="压力真空释放阀" />
+                  </div>
+                </td>
+                <td class="border border-gray-300 p-2 text-center align-middle font-medium product-name">压力真空释放阀</td>
+              </tr>
+
+              <!-- 第4行 -->
+              <tr>
+                <td class="border border-gray-300 p-2 align-middle product-img-cell">
+                  <div class="product-box w-full h-24 md:h-32 flex items-center justify-center">
+                    <img src="pictures/产品/双闸气锁耐磨陶瓷出料阀.jpg" alt="双闸气锁耐磨陶瓷出料阀" />
+                  </div>
+                </td>
+                <td class="border border-gray-300 p-2 text-center align-middle font-medium product-name">双闸气锁耐磨陶瓷出料阀</td>
+
+                <td class="border border-gray-300 p-2 align-middle product-img-cell">
+                  <div class="product-box w-full h-24 md:h-32 flex items-center justify-center">
+                    <img src="pictures/产品/双闸气锁耐磨陶瓷进料阀.jpg" alt="双闸气锁耐磨陶瓷进料阀" />
+                  </div>
+                </td>
+                <td class="border border-gray-300 p-2 text-center align-middle font-medium product-name">双闸气锁耐磨陶瓷进料阀</td>
+
+                <td class="border border-gray-300 p-2 align-middle product-img-cell">
+                  <div class="product-box w-full h-24 md:h-32 flex items-center justify-center">
+                    <img src="pictures/产品/外挂轴承锁风喂料器.jpg" alt="外挂轴承锁风喂料器" />
+                  </div>
+                </td>
+                <td class="border border-gray-300 p-2 text-center align-middle font-medium product-name">外挂轴承锁风喂料器</td>
+
+                <td class="border border-gray-300 p-2 align-middle product-img-cell">
+                  <div class="product-box w-full h-24 md:h-32 flex items-center justify-center">
+                    <img src="pictures/产品/对焊冷凝容器.jpg" alt="对焊冷凝容器" />
+                  </div>
+                </td>
+                <td class="border border-gray-300 p-2 text-center align-middle font-medium product-name">对焊冷凝容器</td>
+              </tr>
+
+              <!-- 第5行 -->
+              <tr>
+                <td class="border border-gray-300 p-2 align-middle product-img-cell">
+                  <div class="product-box w-full h-24 md:h-32 flex items-center justify-center">
+                    <img src="pictures/产品/开关柜.jpg" alt="开关柜" />
+                  </div>
+                </td>
+                <td class="border border-gray-300 p-2 text-center align-middle font-medium product-name">开关柜</td>
+
+                <td class="border border-gray-300 p-2 align-middle product-img-cell">
+                  <div class="product-box w-full h-24 md:h-32 flex items-center justify-center">
+                    <img src="pictures/产品/排污阀.jpg" alt="排污阀" />
+                  </div>
+                </td>
+                <td class="border border-gray-300 p-2 text-center align-middle font-medium product-name">排污阀</td>
+
+                <td class="border border-gray-300 p-2 align-middle product-img-cell">
+                  <div class="product-box w-full h-24 md:h-32 flex items-center justify-center">
+                    <img src="pictures/产品/控制箱.jpg" alt="控制箱" />
+                  </div>
+                </td>
+                <td class="border border-gray-300 p-2 text-center align-middle font-medium product-name">控制箱</td>
+
+                <td class="border border-gray-300 p-2 align-middle product-img-cell">
+                  <div class="product-box w-full h-24 md:h-32 flex items-center justify-center">
+                    <img src="pictures/产品/母线槽.jpg" alt="母线槽" />
+                  </div>
+                </td>
+                <td class="border border-gray-300 p-2 text-center align-middle font-medium product-name">母线槽</td>
+              </tr>
+
+              <!-- 第6行 -->
+              <tr>
+                <td class="border border-gray-300 p-2 align-middle product-img-cell">
+                  <div class="product-box w-full h-24 md:h-32 flex items-center justify-center">
+                    <img src="pictures/产品/电加热装置.jpg" alt="电加热装置" />
+                  </div>
+                </td>
+                <td class="border border-gray-300 p-2 text-center align-middle font-medium product-name">电加热装置</td>
+
+                <td class="border border-gray-300 p-2 align-middle product-img-cell">
+                  <div class="product-box w-full h-24 md:h-32 flex items-center justify-center">
+                    <img src="pictures/产品/钢结构及灰库设备.png" alt="钢结构及灰库设备" />
+                  </div>
+                </td>
+                <td class="border border-gray-300 p-2 text-center align-middle font-medium product-name">钢结构及灰库设备</td>
+
+                <td class="border border-gray-300 p-2 align-middle product-img-cell">
+                  <div class="product-box w-full h-24 md:h-32 flex items-center justify-center">
+                    <img src="pictures/产品/铝合金穿线盒.jpg" alt="铝合金穿线盒" />
+                  </div>
+                </td>
+                <td class="border border-gray-300 p-2 text-center align-middle font-medium product-name">铝合金穿线盒</td>
+
+                <td class="border border-gray-300 p-2 align-middle product-img-cell">
+                  <div class="product-box w-full h-24 md:h-32 flex items-center justify-center">
+                    <img src="pictures/产品/防堵风压取样装置.jpg" alt="防堵风压取样装置" />
+                  </div>
+                </td>
+                <td class="border border-gray-300 p-2 text-center align-middle font-medium product-name">防堵风压取样装置</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
   </section>
 
   <!-- 联系方式 -->
-  <section id="contact" class="py-12 relative">
+  <section id="contact" class="py-12 relative scroll-mt-24">
     <!-- 背景图片 -->
     <img src="https://picsum.photos/id/1031/1920/800" alt="联系方式背景" class="absolute inset-0 w-full h-full object-cover">
     <div class="absolute inset-0 bg-primary/70"></div>
@@ -461,32 +720,34 @@
         </div>
         
         <div class="w-full md:w-1/2 bg-white/10 backdrop-blur-sm p-6 rounded-lg shadow-lg">
-          <h3 class="text-2xl font-bold mb-6 text-center">留言咨询</h3>
+          <h3 class="text-2xl font-bold mb-6 text-center">社交平台</h3>
           <form>
-            <div class="mb-4">
-              <label for="name" class="block mb-2">姓名</label>
-              <input type="text" id="name" class="w-full px-4 py-2 rounded-md bg-white/20 border border-white/30 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-secondary" placeholder="请输入您的姓名">
+            <!-- 微信条目 -->
+            <div class="flex items-start">
+              <div class="w-14 h-14 bg-white/20 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                <i class="fa fa-weixin text-xl"></i>
+              </div>
+              <div>
+                <h3 class="text-xl font-semibold mb-1">微信昵称: 我爱我愿(ZJLK电力)朱立荣</h3>
+                <h3 class="text-xl font-semibold mb-1">微 信 号 : wxid_t2u4hl1brl1221</h3>
+              </div>
             </div>
             
-            <div class="mb-4">
-              <label for="phone" class="block mb-2">电话</label>
-              <input type="tel" id="phone" class="w-full px-4 py-2 rounded-md bg-white/20 border border-white/30 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-secondary" placeholder="请输入您的电话">
+            <!-- 新增抖音条目（与微信保持相同样式，添加间距） -->
+            <div class="flex items-start mt-6">
+              <div class="w-14 h-14 bg-white/20 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                <i class="fa fa-youtube-play text-xl"></i> <!-- 若有抖音专用图标可替换为fa fa-douyin -->
+              </div>
+              <div>
+                <h3 class="text-xl font-semibold mb-1">抖音昵称: 我爱我愿</h3>
+                <h3 class="text-xl font-semibold mb-1">抖 音 号 : woaiwoyuan19</h3>
+              </div>
             </div>
-            
-            <div class="mb-4">
-              <label for="email" class="block mb-2">邮箱</label>
-              <input type="email" id="email" class="w-full px-4 py-2 rounded-md bg-white/20 border border-white/30 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-secondary" placeholder="请输入您的邮箱">
-            </div>
-            
-            <div class="mb-6">
-              <label for="message" class="block mb-2">留言内容</label>
-              <textarea id="message" rows="4" class="w-full px-4 py-2 rounded-md bg-white/20 border border-white/30 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-secondary" placeholder="请输入您的留言内容"></textarea>
-            </div>
-            
-            <button type="submit" class="w-full py-3 bg-secondary hover:bg-secondary/90 text-white font-bold rounded-md transition-colors">
-              提交留言
-            </button>
           </form>
+          <h3 class="text-2xl font-bold mb-6 text-center">运输地区</h3>
+          <div class="mt-2 flex justify-center">
+            <img src="pictures/运输地区.png" alt="运输地区" class="mx-auto w-full max-w-lg h-auto rounded-md shadow-md">
+          </div>
         </div>
       </div>
     </div>
@@ -495,34 +756,153 @@
   <!-- 页脚 -->
   <footer class="bg-primary text-white py-6">
     <div class="container mx-auto px-4 text-center">
-      <p>&copy; 2025 镇江立凯电力设备有限公司 朱采阳 | 扬中市油坊镇长旺村</p >
+      <p>&copy; 2025 镇江立凯电力设备有限公司 梦影 | 镇江市扬中市油坊镇长旺村</p >
     </div>
   </footer>
 
-  <!-- 平滑滚动脚本 -->
+  <!-- 导航交互脚本 -->
   <script>
-    // 平滑滚动到指定区域
-    function scrollToSection(sectionId) {
-      const section = document.getElementById(sectionId);
-      if (section) {
-        window.scrollTo({
-          top: section.offsetTop - 80, // 减去导航栏高度，避免被遮挡
-          behavior: 'smooth' // 平滑滚动效果
+    document.addEventListener('DOMContentLoaded', function () {
+      const mainNav = document.getElementById('main-nav');
+      const toggleBtn = document.getElementById('nav-toggle');
+      const mobileMenu = document.getElementById('mobile-menu');
+      const navLinks = document.querySelectorAll('[data-nav-link]');
+      const desktopLinksWrap = document.getElementById('desktop-nav-links');
+      const desktopNavLinks = desktopLinksWrap ? desktopLinksWrap.querySelectorAll('[data-nav-link]') : [];
+      const underline = document.getElementById('nav-underline');
+      let isNavigating = false; // 点击导航进行平滑滚动时，暂时锁定指示条
+      let navigateTargetId = null;
+
+      function applyNavStyle() {
+        const scrolled = window.scrollY > 20;
+        if (scrolled) {
+          // 下拉时为深色背景
+          mainNav.classList.remove('bg-white/95', 'text-primary', 'bg-transparent', 'backdrop-blur-sm', 'nav-contrast');
+          mainNav.classList.add('bg-primary/90', 'text-white', 'shadow-sm');
+        } else {
+          // 顶部为浅色背景
+          mainNav.classList.remove('bg-primary/90', 'text-white');
+          mainNav.classList.add('bg-white/95', 'text-primary', 'shadow-sm');
+        }
+      }
+
+      applyNavStyle();
+      window.addEventListener('scroll', applyNavStyle);
+
+      if (toggleBtn) {
+        toggleBtn.addEventListener('click', () => {
+          const isOpen = toggleBtn.getAttribute('aria-expanded') === 'true';
+          toggleBtn.setAttribute('aria-expanded', String(!isOpen));
+          mobileMenu.classList.toggle('hidden');
         });
       }
-    }
 
-    // 滚动时改变导航栏样式
-    window.addEventListener('scroll', function() {
-      const nav = document.getElementById('main-nav');
-      if (window.scrollY > 100) {
-        nav.classList.add('bg-primary/90', 'backdrop-blur-sm');
-        nav.classList.remove('bg-transparent');
-      } else {
-        nav.classList.remove('bg-primary/90', 'backdrop-blur-sm');
+      navLinks.forEach((link) => {
+        link.addEventListener('click', (e) => {
+          // 关闭移动端菜单
+          mobileMenu.classList.add('hidden');
+          if (toggleBtn) toggleBtn.setAttribute('aria-expanded', 'false');
+
+          // 锁定指示条到目标，避免滚动中来回移动
+          const href = link.getAttribute('href') || '';
+          const match = href.match(/^#(.+)/);
+          if (match) {
+            const id = match[1];
+            navigateTargetId = id;
+            isNavigating = true;
+            setActiveById(id);
+          }
+        });
+      });
+
+      // 初始化/更新下划线到某个元素
+      function moveUnderlineTo(element) {
+        if (!underline || !element || !desktopLinksWrap) return;
+        const wrapRect = desktopLinksWrap.getBoundingClientRect();
+        const rect = element.getBoundingClientRect();
+        underline.style.left = `${rect.left - wrapRect.left}px`;
+        underline.style.width = `${rect.width}px`;
       }
+
+      // 鼠标悬停临时移动下划线
+      desktopNavLinks.forEach((link) => {
+        link.addEventListener('mouseenter', () => { if (!isNavigating) moveUnderlineTo(link); });
+      });
+
+      // 记录当前高亮的链接，滚动时跟随
+      let currentActiveLink = null;
+
+      // 工具：根据id设置活动项
+      function setActiveById(id) {
+        const linkAll = document.querySelectorAll(`[data-nav-link][href="#${id}"]`);
+        const linkDesktop = desktopLinksWrap ? desktopLinksWrap.querySelector(`[data-nav-link][href="#${id}"]`) : null;
+        if (!linkAll || linkAll.length === 0) return;
+        navLinks.forEach((l) => l.classList.remove('nav-link-active'));
+        linkAll.forEach((l) => l.classList.add('nav-link-active'));
+        currentActiveLink = linkDesktop || desktopNavLinks[0];
+        moveUnderlineTo(currentActiveLink);
+      }
+
+      // 高亮当前可见的区块对应的导航链接（观察 + 滚动双保险）
+      const sections = Array.from(document.querySelectorAll('section[id]'));
+      const observer = new IntersectionObserver((entries) => {
+        // 点击导航进行平滑滚动时，只在达到目标区块后再解锁并更新
+        if (isNavigating && navigateTargetId) {
+          entries.forEach((entry) => {
+            if (entry.target.id === navigateTargetId && entry.isIntersecting) {
+              isNavigating = false;
+              setActiveById(navigateTargetId);
+            }
+          });
+          return; // 锁定期间不进行普通更新
+        }
+
+        // 非锁定：取可见比例最高的那个
+        let topCandidate = null;
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            if (!topCandidate || entry.intersectionRatio > topCandidate.intersectionRatio) {
+              topCandidate = entry;
+            }
+          }
+        });
+        if (topCandidate) setActiveById(topCandidate.target.id);
+      }, { threshold: [0.15, 0.35, 0.55], rootMargin: '-10% 0px -30% 0px' });
+
+      sections.forEach((sec) => observer.observe(sec));
+
+      // 滚动计算作为兜底
+      function updateActiveByScroll() {
+        if (isNavigating) return; // 锁定期间忽略滚动更新
+        if (!sections.length) return;
+        const navH = mainNav ? mainNav.offsetHeight : 0;
+        let activeId = sections[0].id;
+        let minDelta = Infinity;
+        sections.forEach((sec) => {
+          const r = sec.getBoundingClientRect();
+          const delta = Math.abs(r.top - (navH + 20));
+          if (r.top <= (window.innerHeight * 0.6) && delta < minDelta) {
+            activeId = sec.id; minDelta = delta;
+          }
+        });
+        setActiveById(activeId);
+      }
+
+      let ticking = false;
+      window.addEventListener('scroll', () => {
+        if (!ticking) {
+          window.requestAnimationFrame(() => { updateActiveByScroll(); ticking = false; });
+          ticking = true;
+        }
+      });
+      window.addEventListener('resize', updateActiveByScroll);
+
+      // 页面初始定位
+      const initActive = (desktopLinksWrap && desktopLinksWrap.querySelector('.nav-link-active')) || desktopNavLinks[0];
+      if (initActive) moveUnderlineTo(initActive);
+      // 初次也触发一次滚动兜底逻辑，确保对齐
+      updateActiveByScroll();
     });
   </script>
-</body>
 </body>
 </html>
